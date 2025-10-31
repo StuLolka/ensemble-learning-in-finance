@@ -34,9 +34,12 @@ The main goal of this research is to explore how ensemble models — such as **R
    Models are trained sequentially, with each new model focusing on correcting the mistakes of the previous ones.  
    Example: *XGBoost*.
 
-3. **Stacking (Stacked Generalization)**  
-   Predictions from multiple base models are used as inputs for a *meta-model* that learns how to optimally combine them to improve predictive performance.  
-   Example: *Stacking Regressor*.
+3. **Voting**
+   A parallel ensemble method that combines predictions of several independently trained models on the same dataset.
+   In regression tasks, the final prediction is typically the average of base model outputs.
+4. **Blending**
+   A simplified version of stacking, where a meta-model is trained on predictions made by base models on a hold-out part of the training data.
+   Blending is computationally efficient and easy to implement, but its performance depends strongly on how the hold-out set is chosen.
 
 ---
 
@@ -44,9 +47,10 @@ The main goal of this research is to explore how ensemble models — such as **R
 
 | Model | MAE ↓ | R² ↑ |
 |:-------|:------:|:----:|
-| RandomForestRegressor | 2.92 | 0.70 |
-| XGBRegressor | 3.16 | 0.61 |
-| StackingRegressor | 2.86 | 0.66 |
+| RandomForestRegressor | 2.93 | 0.642 |
+| XGBRegressor | 3.16 | 0.608 |
+| Voting | 3.02 | 0.626 |
+| Blending | 3.05 | 0.625 |
 
 > Even without hyperparameter tuning, ensemble models demonstrate solid predictive performance and robustness to data noise.
 
