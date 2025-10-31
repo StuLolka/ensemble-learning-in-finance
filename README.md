@@ -24,22 +24,32 @@ The main goal of this research is to explore how ensemble models — such as **R
 
 ---
 
-## 🧩 **Methods Overview**
+## 🧠 Ensemble Methods Used
+
+This project explores several ensemble learning approaches aimed at improving predictive accuracy and model robustness.  
 
 1. **Bagging (Bootstrap Aggregating)**  
-   Multiple independent models are trained in parallel on bootstrapped subsets of data, and their predictions are aggregated (averaged or voted).  
-   Example: *Random Forest*.
+   Multiple independent models are trained in parallel on different bootstrapped subsets of the original dataset,  
+   and their predictions are then averaged (or aggregated via voting).  
+   This approach reduces variance and helps prevent overfitting.  
+   **Example:** *Random Forest*.
 
 2. **Boosting**  
-   Models are trained sequentially, with each new model focusing on correcting the mistakes of the previous ones.  
-   Example: *XGBoost*.
+   Models are trained **sequentially**, where each new model focuses on correcting the errors made by the previous ones.  
+   Boosting often achieves high predictive accuracy but requires more training time and can be less interpretable.  
+   **Example:** *XGBoost*.
 
-3. **Voting**
-   A parallel ensemble method that combines predictions of several independently trained models on the same dataset.
-   In regression tasks, the final prediction is typically the average of base model outputs.
-4. **Blending**
-   A simplified version of stacking, where a meta-model is trained on predictions made by base models on a hold-out part of the training data.
-   Blending is computationally efficient and easy to implement, but its performance depends strongly on how the hold-out set is chosen.
+3. **Voting**  
+   A **parallel** ensemble method where several models, trained on the same data, make predictions,  
+   and the final output is calculated as the **average** of their predictions (for regression tasks).  
+   This method helps stabilize results and reduce variance, especially when combining models of different types that complement each other.
+
+4. **Blending**  
+   A simplified version of stacking, where the meta-model is trained not on cross-validation predictions,  
+   but on a **hold-out** portion of the training data.  
+   Blending is simpler and faster to implement, but its performance heavily depends on how the hold-out sample is selected.  
+   When data is limited, it tends to be less statistically stable than full stacking.
+
 
 ---
 
