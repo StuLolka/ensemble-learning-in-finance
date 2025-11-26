@@ -1,88 +1,87 @@
 [🇷🇺 Russian](README_RU.md)
 
-# Ensemble Learning in Finance
+# Ensemble Methods for Predicting Stock Return and Price Direction
 
+This repository contains the code and materials for a research project dedicated to applying ensemble machine learning methods to predict stock returns and the direction of price movement based on historical data.
 
-📘 **Project Overview**
-
-This repository contains a **course project** focused on applying **ensemble machine learning methods** (Bagging, Boosting, and Stacking) for the **analysis and prediction of stock returns**.  
-The project is part of the *Applied Informatics* undergraduate program and is currently **in active development**.
+The project is implemented in a Jupyter Notebook and is accompanied by a written report that includes data analysis, model descriptions, and interpretation of the results.
 
 ---
 
-## 🎯 **Objective**
+## 📌 Project Goals
 
-The main goal of this research is to explore how ensemble models — such as **Random Forest**, **XGBoost**, and **Stacking Regressor** — can be used to **predict the next-day opening price** of a stock based on historical trading data.
-
----
-
-## ⚙️ **Technologies Used**
-- Python (pandas, numpy, matplotlib, seaborn)
-- scikit-learn
-- XGBoost
-- Jupyter Notebook
-
----
-
-## 🧠 Ensemble Methods Used
-
-This project explores several ensemble learning approaches aimed at improving predictive accuracy and model robustness.  
-
-1. **Bagging (Bootstrap Aggregating)**  
-   Multiple independent models are trained in parallel on different bootstrapped subsets of the original dataset,  
-   and their predictions are then averaged (or aggregated via voting).  
-   This approach reduces variance and helps prevent overfitting.  
-   **Example:** *Random Forest*.
-
-2. **Boosting**  
-   Models are trained **sequentially**, where each new model focuses on correcting the errors made by the previous ones.  
-   Boosting often achieves high predictive accuracy but requires more training time and can be less interpretable.  
-   **Example:** *XGBoost*.
-
-3. **Voting**  
-   A **parallel** ensemble method where several models, trained on the same data, make predictions,  
-   and the final output is calculated as the **average** of their predictions (for regression tasks).  
-   This method helps stabilize results and reduce variance, especially when combining models of different types that complement each other.
-
-4. **Blending**  
-   A simplified version of stacking, where the meta-model is trained not on cross-validation predictions,  
-   but on a **hold-out** portion of the training data.  
-   Blending is simpler and faster to implement, but its performance heavily depends on how the hold-out sample is selected.  
-   When data is limited, it tends to be less statistically stable than full stacking.
-
+- Evaluate the applicability of ensemble models to the task of predicting stock returns.
+- Compare the performance of several algorithms:
+  - RandomForest  
+  - ExtraTrees  
+  - XGBoost  
+  - LightGBM  
+  - HistGradientBoosting  
+  - Ridge Regression  
+  - KNN
+- Assess ensemble architectures: VotingRegressor, weighted voting, and blending.
+- Measure prediction accuracy for both **return magnitude** and **price direction**.
+- Analyze the robustness of models across hundreds of individual time series.
+- Examine the impact of hyperparameter tuning and weight assignment within the ensemble.
+- Measure the computational performance of all algorithms.
 
 ---
 
-## 📈 **Current Results**
+## 📊 Metrics
 
-| Model | MAE ↓ | R² ↑ |
-|:-------|:------:|:----:|
-| RandomForestRegressor | 2.93 | 0.642 |
-| XGBRegressor | 3.16 | 0.608 |
-| Voting | 3.02 | 0.626 |
-| Blending | 3.05 | 0.625 |
+Two key metrics are used in the project:
 
-> Even without hyperparameter tuning, ensemble models demonstrate solid predictive performance and robustness to data noise.
+- **SMAPE (Symmetric Mean Absolute Percentage Error)** — measures the relative prediction error.
+- **Direction Accuracy** — the proportion of correctly predicted price movement directions (up/down).
+
+Taken together, these metrics reflect both numerical precision and practical predictive usefulness.
 
 ---
 
-## 🧮 **Data and Approach**
+## 🧠 Models Used
 
-The dataset contains daily stock trading data, including open, close, high, low prices, and trading volume.  
-The target variable is the **next-day opening price** (`tomorrow_open`), derived from the shifted `open` column.  
-Train/test splits are made chronologically (no data leakage).  
+- RandomForestRegressor  
+- ExtraTreesRegressor  
+- XGBoostRegressor  
+- LightGBMRegressor  
+- HistGradientBoostingRegressor  
+- Ridge Regression (within a Pipeline)
+- KNeighborsRegressor (within a Pipeline)
 
-Each model is evaluated using:
-- **Mean Absolute Error (MAE)**
-- **Coefficient of Determination (R² score)**
+Each model also has a tuned version with optimized hyperparameters.
 
 ---
 
-## 🚧 **Project Status**
+## 🧩 Ensemble Strategies
 
-⚠️ This project is **a work in progress**.  
-Planned updates include:
-- Feature engineering and lag-based features;
-- Hyperparameter optimization (GridSearchCV / Optuna);
-- Advanced visualization of prediction errors;
-- Comparison with neural network models (LSTM, MLP).
+The following ensemble techniques were evaluated:
+
+### 1. VotingRegressor (equal weights)
+All models contribute equally to the final prediction.
+
+### 2. VotingRegressor (weighted)
+Stronger models receive higher weights; weaker ones receive minimal influence.
+
+### 3. Ensemble of Strongest Models
+A combination of RandomForest, ExtraTrees, and XGBoost (both with and without custom weights).
+
+### 4. Blending
+Predictions of base models are combined using a Ridge meta-model.
+
+---
+
+## 📊 Model Performance
+
+Average performance of the tuned models and the final ensemble:
+
+| Model                                  | SMAPE ↓      | Direction Accuracy ↑ | Runtime          | <55% assets | >95% assets |
+|----------------------------------------|--------------|-----------------------|------------------|-------------|-------------|
+| **XGBoostRegressor**           | 104.2157     | 0.7423                | 01:57            | 37          | 7           |
+| **LightGBMRegressor**          | 107.6480     | 0.7206                | 00:32            | 48          | 3           |
+| **HistGradientBoostingRegressor**      | 101.6070     | 0.7412                | 01:54            | 45          | 4           |
+| **RandomForestRegressor**      | 97.5782      | 0.7523                | 08:47            | 29          | 5           |
+| **ExtraTreesRegressor**        | 98.4191      | 0.7486                | 03:04            | 31          | 5           |
+| **KNeighborsRegressor**        | 138.0007     | 0.6329                | 00:29            | 102         | 4           |
+| **Final ensemble**    | **97.5133**  | **0.7531**            | **14:30**        | **28**      | **5**       |
+
+---
