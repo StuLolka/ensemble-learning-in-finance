@@ -8,6 +8,16 @@ The project is implemented in a Jupyter Notebook and is accompanied by a written
 
 ---
 
+## Dataset
+
+The project uses the [MOEX Shares Prices (since 2004)](https://www.kaggle.com/datasets/alexanderkobzar/moex-shares-prices-since-2004) dataset, published on Kaggle by Alexander Kobzar.
+
+The original dataset contains 2,437,686 records covering 2,768 securities traded on the Moscow Exchange (MOEX).
+
+After preprocessing and feature engineering, the dataset contains 1,022,418 observations across 618 securities.
+
+---
+
 ## 📌 Project Goals
 
 - Evaluate the applicability of ensemble models to the task of predicting stock returns.
